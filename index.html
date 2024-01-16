@@ -1,61 +1,153 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title>图片水印打码工具</title>
     <style>
-        #container {
-            max-width: 500px;
-            margin: 30px auto;
+        body {
+            background-color: #121212;
+            color: #d3d3d3;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
         }
 
-        h1 { margin: 0 }
-        p, article { margin: 0 0 20px 0 }
-        article { font-size: 14px; color: #777 }
+        #container {
+            max-width: 600px;
+            margin: 30px auto;
+            background-color: #111;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px 0 rgba(0, 255, 255, 0.5);
+        }
 
-        label { color: blue; font-size: 17px }
-        p label { color: black; display: inline-block; margin-right: 5px; font-size: 15px }
-        p { font-size: 15px; line-height: 30px }
-        p > * { vertical-align: middle }
+        h1 {
+            margin: 0;
+            color: #0ff;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.7);
+            font-family: 'Courier New', Courier, monospace;
+        }
 
-        input#text { width: 100%; box-sizing: border-box; font-size: 16px; margin-bottom: 10px }
-        input[type=range] { width: 200px; height: 18px; }
+        article {
+            font-size: 14px;
+            color: #7df9ff;
+            margin-bottom: 20px;
+        }
 
-        canvas { box-sizing: border-box; width: 100%; border: 1px dashed #AAA; cursor: pointer }
+        a {
+            color: #ff1493;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        label {
+            color: #00ffff;
+            font-size: 17px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        p label {
+            color: #ffffff;
+            display: inline-block;
+            margin-right: 5px;
+            font-size: 15px;
+        }
+
+        p {
+            font-size: 15px;
+            line-height: 30px;
+            color: #d3d3d3;
+        }
+
+        p>* {
+            vertical-align: middle;
+        }
+
+        input[type="text"],
+        input[type="file"] {
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 16px;
+            margin-bottom: 10px;
+            background-color: #222;
+            border: 1px solid #00ffff;
+            color: #7df9ff;
+            padding: 5px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 18px;
+            background-color: #222;
+        }
+
+        input[type="color"],
+        input[type="checkbox"] {
+            border: 1px solid #00ffff;
+            background-color: #222;
+            color: #7df9ff;
+        }
+
+        button {
+            background-color: #00ffff;
+            color: #000;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
+            box-shadow: 0 0 5px 0 rgba(0, 255, 255, 0.7);
+        }
+
+        button:hover {
+            background-color: #7df9ff;
+        }
+
+        canvas {
+            box-sizing: border-box;
+            width: 100%;
+            border: 1px dashed #AAA;
+            cursor: pointer;
+            background-color: #000;
+        }
     </style>
+
 </head>
-    <div id="container">
-        <h1>图片水印打码工具</h1>
-        <article>安全地为你的图片加水印，无任何网络请求，特别适合各种敏感证件（身份证，驾照，护照等）。<a href="https://github.com/joyqi/sfz">Github地址</a></article>
+<div id="container">
+    <h1>图片水印打码工具</h1>
+    <article>安全地为你的图片加水印，无任何网络请求，特别适合各种敏感证件（身份证，驾照，护照等）。</article>
 
-        <label for="image">第一步：先选择一张本地图片</label>
-        <p><input type="file" id="image" autocomplete="off"></p>
+    <label for="image">第一步：先选择一张本地图片</label>
+    <p><input type="file" id="image" autocomplete="off"></p>
 
-        
-        <label for="text">第二步：输入需要打水印的文字</label>
-        <p><input type="text" id="text" placeholder="请输入文字" autocomplete="off" maxlength="30">
-        
+
+    <label for="text">第二步：输入需要打水印的文字</label>
+    <p><input type="text" id="text" placeholder="请输入文字" autocomplete="off" maxlength="30">
+
         <label for="color">颜色</label>
         <input type="color" id="color" pattern="#[0-9A-Fa-f]{6}" autocomplete="off" value="#0000FF"><br>
-        
+
         <label for="alpha">透明度</label>
         <input type="range" id="alpha" min="0" max="1" step="0.05" autocomplete="off" value="0.15"><br>
-        
+
         <label for="space">间隔</label>
         <input type="range" id="space" min="1" max="8" step="0.2" autocomplete="off" value="4"><br>
-        
+
         <label for="size">字号</label>
         <input type="range" id="size" min="0.5" max="3" step="0.05" autocomplete="off" value="1">
-        </p>
-        
-        <label for="text">第三步：点击图片下载</label>
-        <p>
-            <label for="auto-refresh">实时刷新</label>
-            <input type="checkbox" id="auto-refresh" autocomplete="off" checked>
-            <button id="refresh" disabled>刷新</button>
-        </p>
-        <p id="graph"></p>
-    </div>
-    <script src="./build/script.js"></script>
+    </p>
+
+    <label for="text">第三步：点击图片下载</label>
+    <p>
+        <label for="auto-refresh">实时刷新</label>
+        <input type="checkbox" id="auto-refresh" autocomplete="off" checked>
+        <button id="refresh" disabled>刷新</button>
+    </p>
+    <p id="graph"></p>
+</div>
+<script src="./build/script.js"></script>
+
 </html>
